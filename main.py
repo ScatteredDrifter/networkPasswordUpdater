@@ -51,7 +51,7 @@ def generate_password_for_each_device_in_list(host_file:str,length:int) -> bool:
         return True
     except:
         return False
-    
+
 # --- / 
 # -- / 
 
@@ -72,9 +72,11 @@ def write_list_to_file(filename:str,list_of_items:list[str])-> bool:
     except  Exception as error:
         raise error
         
-     
+   
+# --- / 
+# -- / 
+  
     
-
 def interface():
     '''
     this function acts as primary interface to access and operate this script 
@@ -97,10 +99,16 @@ def interface():
         selection:int = int(input("enter an integer"))
         print("selected {} -> {}".format(selection,menuOptions[selection] ))
         break
-        
+      
+# --- / 
+# -- / 
+  
 def clearScreen():
     # taken from https://stackoverflow.com/questions/2084508/clear-terminal-in-python#2084628
     os.system('cls' if os.name == 'nt' else 'clear')
+
+# --- / 
+# -- / 
 
 def displayMenu(options): 
     

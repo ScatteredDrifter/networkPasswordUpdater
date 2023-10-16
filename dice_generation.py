@@ -19,6 +19,7 @@ from file_handling import gatherFilePath
 
 
 # --- / 
+# -- / 
 
 def roll_dice() -> int:
     '''
@@ -30,6 +31,7 @@ def roll_dice() -> int:
     return system_random.randint(1,6)
 
 # --- / 
+# -- / 
 
 def roll_n_times(n:int) -> list[int]:
     '''
@@ -44,6 +46,7 @@ def roll_n_times(n:int) -> list[int]:
     return array_of_numbers
 
 # --- / 
+# -- / 
 
 def roll_word() -> int:
     '''
@@ -59,26 +62,31 @@ def roll_word() -> int:
         # increasing position
         number_position +=1
     return concatenated_number
-    
+
+# --- / 
+# -- / 
 
 def get_word_from_list(word_number:int,file_path:str) -> str | None:
     '''
     looking up word from file supplied
     '''
     try:
-        file_path:str | None = gatherFilePath(file_path)
-        assert (file_path != None)
+        validated_file_path:str | None = gatherFilePath(file_path)
+        assert (validated_file_path != None)
     except error:
         raise error
         
     # given_path:str = "dicepasswords/diceware_wordlist.txt"
-    with open(file_path,'r',encoding='UTF-8') as file:
+    with open(validated_file_path,'r',encoding='UTF-8') as file:
         word = None
         for line in file:
             if str(word_number) in line:
                 word = line
     return word
     
+# --- / 
+# -- / 
+
 def generatePassword(n:int) -> str:
     '''
     takes **n** words from provided word-liste and forms a string out of it 
@@ -105,6 +113,9 @@ def generatePassword(n:int) -> str:
     # print(list_of_words)
     return resulting_word
 
+# --- / 
+# -- / 
+
 def select_wordlist() -> str:
     ''' 
     function listing available wordlists to choose from
@@ -112,6 +123,9 @@ def select_wordlist() -> str:
     '''
     decision:str = ""
     return decision
+
+# --- / 
+# -- / 
 
 def convert_string_to_word(string:str) -> str:
     '''
@@ -121,12 +135,18 @@ def convert_string_to_word(string:str) -> str:
     
     return formatted_word
 
+# --- / 
+# -- / 
+
 def capitalize_letter(string_to_capitalize:str) -> str:
     ''' 
     '''
     processed_string:str = string_to_capitalize[0].upper() + string_to_capitalize[1:]
     
     return processed_string
+
+# --- / 
+# -- / 
 
 def remove_characters_from_word(unprocessed_string:str) -> str :
     '''
@@ -143,8 +163,10 @@ def remove_characters_from_word(unprocessed_string:str) -> str :
     # stripping newline characters
     processed_line = re.sub(r"\n+","",processed_line)
     return processed_line
-    
 
+# --- / 
+# -- / 
+    
 if __name__ =="__main__":
     print("should not be runned, its a library")
     
@@ -152,6 +174,5 @@ if __name__ =="__main__":
     
     # print(roll_n_times(5))
     sample_number = roll_word()
-    # print(get_word_from_list(sample_number,"diceware_wordlist.txt") )
-    print(generatePassword(40))
+    print(generatePassword(4))
     
