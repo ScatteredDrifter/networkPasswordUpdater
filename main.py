@@ -17,6 +17,7 @@ from selenium.webdriver.common.by import By
 import time 
 import glob
 import datetime
+import os
 
 
 # --- /
@@ -33,7 +34,7 @@ def requestPassword(length:int) -> str | None:
     try:
         # TODO Extract to loadWebsite()
         requestUrl = "https://diceware.dmuth.org/?debug={}&skip_animation".format(length)
-        browser:object = webdriver.Firefox()
+        browser = webdriver.Firefox()
         browser.get(requestUrl)
         time.sleep(4)
     
@@ -47,7 +48,7 @@ def requestPassword(length:int) -> str | None:
 # --- /
 # -- / 
 
-def setNewPassword(passwordLength:int) -> bool:
+def writeNewPassword(passwordLength:int) -> bool:
     '''
     acquires new password from diceware website and saves it to **newPassword** 
     returns **True** if successfull
@@ -122,7 +123,7 @@ def createBackup(fileName):
     # suffix:str = ".backup"
     backupName:str = "oldPassword"
     fileContent:str | None = readFromFile(fileName)
-    if fileContent == None:
+    if (fileContent == None):
         return False
     newFileName:str = "{}_{}".format(backupName,currentDate)
     print("creating backup of file {}. Saving to --> {}".format(fileName,newFileName))
@@ -133,13 +134,60 @@ def createBackup(fileName):
 # --- /
 # -- / 
 
-def interface()
+def gatherUserInput(displayedMessage:str) -> int:
+    #TODO check range (min,max)
+    '''
+    function that is checking for an according  
+    '''
+    gatheredInput = input("{} \n".format(displayedMessage)) 
+    try:
+        return int(gatheredInput)
+    except:
+        return gatherUserInput(displayedMessage)
+
+def interface():
+    '''
+    this function acts as primary interface to access and operate this script 
+    '''
+    programmHeader = readFromFile("overview.txt")
+    
+    menuOptions= [
+        "Option 1",
+        "Option 2",
+        "Option 3",
+        "Option 4"
+    ]
+    
+    primaryLoop = True
+    while primaryLoop:
+        # executing loop of interface
+        clearScreen()
+        print(programmHeader)
+        displayMenu(menuOptions)
+        selection:int = gatherUserInput("enter an integer")
+        print("selected {} -> {}".format(selection,menuOptions[selection] ))
+        
+        break
+
+        
+        
+        
+        
+def clearScreen():
+    # taken from https://stackoverflow.com/questions/2084508/clear-terminal-in-python#2084628
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def displayMenu(options): 
+    
+    for i in range(0,len(options)):
+        print("{}. -- {}".format(i,options[i]))
 
 # --- /
 # -- / 
 if __name__ == "__main__":
     print("executing script")
-    print(setNewPassword(5))
+    print(writeNewPassword(5))
+    # interface()
     
     # writeToFile("newPassword","Das sollte funktionieren")
     

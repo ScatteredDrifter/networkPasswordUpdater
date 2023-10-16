@@ -45,15 +45,16 @@ BundledHosts=$(<hosts)
 # --- / 
 # -- / extracting **old password** and **new password**
 # TODO Finde secure method to import those information /
-old_password=$(<oldPassword)
+# old_password=$(<oldPassword)
 new_password=$(<newPassword)
 
 # --- / 
 # -- / setting script to execute **inside SSH-Connection
 # this also differs from machine to machine ! 
 
-command_afterUpdate="echo 'update complete, leaving';exit"
-SCRIPT="${old_password}; ${new_password}; ${command_afterUpdate}"
+command_afterUpdate="echo 'update complete, leaving'"
+SCRIPT="echo '${new_password}; ${command_afterUpdate}' "
+# SCRIPT="uname -r"
 
 # --- / 
 # -- / 
@@ -65,7 +66,12 @@ function iterateSshOnMachines {
 			local arrayHostInformation 
 			stripString arrayHostInformation ${BUNDLE}
 			# executing SSH connection and running script
-			echo "ssh -o StrictHostKeyChecking=no -l ${arrayHostInformation[0]} ${arrayHostInformation[1]} "${SCRIPT}""
+			# echo " ${arrayHostInformation[0]}@${arrayHostInformation[1]} "
+			echo " ${arrayHostInformation[2]}"
+			sshpass -f oldPassword ssh -o StrictHostKeyChecking=no -l ${arrayHostInformation[0]}  ${arrayHostInformation[1]} -t ${SCRIPT}
+			# ${SCRIPT}
+			# ${command_afterUpdate}
+
 			# TODO requires fail safe to abort timeout behavior
 		done 
 }
