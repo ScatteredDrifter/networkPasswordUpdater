@@ -1,1 +1,6 @@
 **/pyenv/**
+**/__pycache__/**
+oldPassword
+newPassword
+hosts_*
+**/hosts
