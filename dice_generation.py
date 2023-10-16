@@ -10,7 +10,7 @@ import re
 
 # --- / 
 # -- / internal imports
-from main import gatherFilePath
+from file_handling import gatherFilePath
 
 # procedures to follow:
 # - roll dices for N-words

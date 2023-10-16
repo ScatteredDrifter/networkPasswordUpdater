@@ -21,6 +21,7 @@
 #
 # example: netzak:10.251.0.0:OS6250
 
+BundledHosts=$(<$1)
 
 # ==== ==== ==== ====
 # = actual script =
@@ -34,13 +35,13 @@ function stripString () {
 		local -n array=$1
 		# IFS contains information on special values that Strings are split up with 
 		# we add : as separator here
-		IFS=":" read -r -a array <<< $2
+		IFS="," read -r -a array <<< $2
 }
 
 # --- / 
 # -- / extracting host information from file 
 #
-BundledHosts=$(<hosts)
+# BundledHosts=$(<hosts_from_2023-10-16\ 20\:48\:29.556844)
 
 # --- / 
 # -- / extracting **old password** and **new password**
@@ -61,14 +62,17 @@ SCRIPT="echo '${new_password}; ${command_afterUpdate}' "
 # - / iterating over all hosts extracted
 function iterateSshOnMachines {
 		# iterating over each line of hosts
+		echo "gathering information from supplied file:"
+		echo ""
+		echo ""
 		for BUNDLE in ${BundledHosts}; do 
 			# declaring array to be filled with host information
 			local arrayHostInformation 
 			stripString arrayHostInformation ${BUNDLE}
 			# executing SSH connection and running script
 			# echo " ${arrayHostInformation[0]}@${arrayHostInformation[1]} "
-			echo " ${arrayHostInformation[2]}"
-			sshpass -f oldPassword ssh -o StrictHostKeyChecking=no -l ${arrayHostInformation[0]}  ${arrayHostInformation[1]} -t ${SCRIPT}
+			echo "name: ${arrayHostInformation[0]}  ip: ${arrayHostInformation[1]} pw: ${arrayHostInformation[2]}"
+			# sshpass -f oldPassword ssh -o StrictHostKeyChecking=no -l ${arrayHostInformation[0]}  ${arrayHostInformation[1]} -t ${SCRIPT}
 			# ${SCRIPT}
 			# ${command_afterUpdate}
 
