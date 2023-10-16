@@ -1,8 +1,6 @@
 # ---- / 
 # --- / PASSWORD UPDATER  
-# currently it requires **geckodriver** to be installed on the host running this script --> aint ideal!
-# 
-#
+
 
 # --- / 
 # -- / internal imports 
@@ -11,11 +9,6 @@ from dice_generation import generatePassword
 
 # --- / 
 # -- / external imports
-from typing import Optional
-import time 
-import glob
-import datetime
-import os
 
 def generate_password_for_each_device_in_list(host_file:str,length:int) -> bool:
     ''' 
