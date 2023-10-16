@@ -170,9 +170,9 @@ def remove_characters_from_word(unprocessed_string:str) -> str :
 if __name__ =="__main__":
     print("should not be runned, its a library")
     
-    # exit("exiting program")
+    exit("exiting program")
     
     # print(roll_n_times(5))
-    sample_number = roll_word()
-    print(generatePassword(4))
+    # sample_number = roll_word()
+    # print(generatePassword(4))
     

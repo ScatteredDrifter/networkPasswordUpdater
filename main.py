@@ -7,8 +7,10 @@
 from file_handling import filename_set_timestamp, readFromFile,gatherFilePath
 from dice_generation import generatePassword
 
+
 # --- / 
 # -- / external imports
+import os
 
 def generate_password_for_each_device_in_list(host_file:str,length:int) -> bool:
     ''' 
